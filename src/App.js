@@ -1,10 +1,16 @@
+import React from 'react';
+import {BrowserRouter as Router} from "react-router-dom";
+
+import Dashboard from './components/Dashboard/Dashboard'
+
 import './App.css';
 
 const App = () => {
+
   return (
-    <div className="main-container">
-      <h1>COVID-VIRUS-AND-VACCINE-TRACKER</h1>
-    </div>
+    <Router>
+      <Dashboard />
+    </Router>
   );
 }
 

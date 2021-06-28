@@ -1,3 +1,9 @@
+:root{
+  --trans-white: rgba(255,255,255,0.2);
+  --trans-black: rgba(0,0,0,0.2);
+  --primary-blue: #3f51b5;
+  --primary-pink: #c51162;
+}
 * {
   padding: 0;
   margin: 0;

@@ -1,10 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import './Navigation.scss';
+// import PropTypes from 'prop-types';
+import '../../assets/css/Navigation.css';
 
 const Navigation = () => (
-  <div className="Navigation">
-    Navigation Component
+  <div className="navigation">
+    
   </div>
 );
 
