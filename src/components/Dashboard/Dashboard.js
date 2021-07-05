@@ -10,7 +10,8 @@ import CovidView from '../Covid/CovidView/CovidView';
 import VaccineView from '../Vaccine/VaccineView/VaccineView';
 
 const Dashboard = () => {
-  const [themeMode, setThemeMode] = useState("light");
+  const [themeMode, setThemeMode] = useState(() => "light");
+  //() => value -> Executes only once.
 
   const handleThemeToggle = checked => {
     const themeType = checked ? "dark" : "light"

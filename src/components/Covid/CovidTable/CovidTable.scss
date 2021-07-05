@@ -1,4 +1,28 @@
 .covid-table {
-    width: 100%;
+    width: 95%;
     height: 400px;
+    overflow: scroll;
+    font-size: .8rem;
+    margin: 20px;
 }
+// .covid-table table{
+//     width: 100%;
+//     border: 1px solid red;
+//     height: 100px;
+//     overflow-y: scroll;
+//     overflow-x: scroll;
+//     background: var(--white);
+// }
+// .covid-table table thead tr{
+//     background: rgba(0,0,0,0.3);
+//     border-color: rgba(0,0,0,0.3);
+// }
+// .covid-table table thead tr th{
+//     border-color: rgba(0,0,0,0.3);
+// }
+// .covid-table table tbody tr{
+//     text-align: center;
+// }
+// .covid-table table tbody tr:nth-child(2n){
+//     background-color: rgba(0,0,0,0.3);
+// }
