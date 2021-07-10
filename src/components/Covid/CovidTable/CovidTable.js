@@ -15,10 +15,16 @@ import '../../../assets/css/CovidTable.css';
 const useStyles = makeStyles({
   root: {
     width: '100%',
+    borderTop: '1px solid rgba(255,255,255,0.01)',
+    borderRadius: '10px'
   },
   container: {
     maxHeight: 440,
   },
+  table_header:{
+    textTransform: 'uppercase',
+    fontWeight: '800'
+  }
 });
 
 const CovidTable = () => {
@@ -28,8 +34,17 @@ const CovidTable = () => {
   const [covidTable, setCovidTable] = useState([]);
 
   const columns = [
-    { id: 'flag', label: '', minWidth: 70 },
-    { id: 'country', label: 'Country', minWidth: 70 },
+    { 
+      id: 'flag', 
+      label: '#', 
+      align: 'center', 
+      minWidth: 70 
+    },
+    { 
+      id: 'country', 
+      label: 'Country', 
+      minWidth: 70 
+    },
     {
       id: 'active_cases',
       label: 'Active\u00a0Cases',
@@ -62,8 +77,7 @@ const CovidTable = () => {
       id: 'infection_risk',
       label: 'Infection\u00a0Risk',
       minWidth: 70,
-      align: 'right',
-      format: (value) => value.toFixed(2),
+      align: 'right'
     },
     {
       id: 'total_recoveries',
@@ -83,8 +97,7 @@ const CovidTable = () => {
       id: 'recovery_proportion',
       label: 'Recovery\u00a0Proportion',
       minWidth: 70,
-      align: 'right',
-      format: (value) => value.toFixed(2),
+      align: 'right'
     },
     {
       id: 'total_deaths',
@@ -104,8 +117,7 @@ const CovidTable = () => {
       id: 'case_fatality_rate',
       label: 'Fatality\u00a0Rate',
       minWidth: 70,
-      align: 'right',
-      format: (value) => value.toFixed(2),
+      align: 'right'
     },
     {
       id: 'total_tests',
@@ -118,8 +130,7 @@ const CovidTable = () => {
       id: 'test_percentage',
       label: 'Test\u00a0Percentage',
       minWidth: 70,
-      align: 'right',
-      format: (value) => value.toFixed(2),
+      align: 'right'
     },
     {
       id: 'population',
@@ -155,11 +166,15 @@ const CovidTable = () => {
     const data = JSON.parse(localStorage.getItem("countries"));
     const newData = [];
     data.forEach((item, index) => {
-      item.flag = `https://www.countryflags.io/${item.TwoLetterSymbol}/flat/32.png`
+      item["Flag"] = `https://www.countryflags.io/${item.TwoLetterSymbol}/shiny/32.png`;
+      item["Infection_Risk"] += "%";
+      item["Recovery_Proporation"] += "%";
+      item["Case_Fatality_Rate"] += "%";
+      item["Test_Percentage"] += "%";
 
       newData.push({
         id: ++index,
-        flag: item["flag"],
+        flag: item["Flag"],
         country: item["Country"],
         active_cases: item["ActiveCases"],
         total_cases: item["TotalCases"],
@@ -190,12 +205,16 @@ const CovidTable = () => {
     setPage(0);
   };
 
+  const handleClick = e => {
+    console.log(e.target)
+  }
+
   return (
-    <Paper className={classes.root}>
+    <Paper elevation={5} className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
-            <TableRow>
+            <TableRow className={classes.table_header}>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
@@ -210,7 +229,7 @@ const CovidTable = () => {
           <TableBody>
             {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                <TableRow onClick={handleClick} hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (

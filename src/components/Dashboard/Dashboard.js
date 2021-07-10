@@ -34,7 +34,7 @@ const Dashboard = () => {
       <div className="dashboard" style={{background: theme.palette.background.default}}>
         <TopBar themeToggle={handleThemeToggle}/>
         <div className="content">
-        <Navigation />
+        {/* <Navigation /> */}
          <Switch>
            <Route exact path="/">
              <Redirect to="/covid"/>
