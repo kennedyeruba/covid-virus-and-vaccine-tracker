@@ -15,9 +15,16 @@ const useStyles = makeStyles({
     overflowY: 'auto',
     position: 'relative',
     padding: '0 10px 100px',
-
     '&::-webkit-scrollbar': {
-      width: '1px'
+      width: '10px'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: 'rgba(0,0,0,0.5)',
+      borderRadius: '5px',
+    },
+    '&::-webkit-scrollbar-track': {
+      width: '5px',
+      background: 'rgba(0,0,0,0.3)',
     }
   },
   world_data: {
@@ -34,6 +41,13 @@ const useStyles = makeStyles({
     width: '160px',
     height: '100px',
     borderRadius: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+  text: {
+    lineHeight: '-10'
   }
 })
 
@@ -86,8 +100,17 @@ const CovidWorld = () => {
 
         // const data = await response.json();
         const data = JSON.parse(localStorage.getItem('world'));
-        setWorldData(data[0])
-        console.log(data[0])
+        const refinedWorldData = {
+          ...data[0],
+          cases: data[0].TotalCases.toLocaleString('en-US'),
+          new_cases: data[0].NewCases.toLocaleString('en-US'),
+          deaths: data[0].TotalDeaths.toLocaleString('en-US'),
+          new_deaths: data[0].NewDeaths.toLocaleString('en-US'),
+          recoveries: Number.parseInt(data[0].TotalRecovered).toLocaleString('en-US'),
+          new_recoveries: data[0].NewRecovered.toLocaleString('en-US')
+        }
+        setWorldData(refinedWorldData)
+        console.log(refinedWorldData)
       }catch(err){
         console.log(`[GET TABLE ERROR]: ${err}`)
       }
@@ -120,10 +143,44 @@ const CovidWorld = () => {
         <h3>+{worldData['NewRecovered']}</h3>
       </Paper> */}
       <Paper className={classes.world_data} elevation={5}>
-        <Paper className={classes.info} elevation={3}></Paper>
-        <Paper className={classes.info} elevation={3}></Paper>
-        <Paper className={classes.info} elevation={3}></Paper>
-        <Paper className={classes.info} elevation={3}></Paper>
+        <Paper className={classes.info} elevation={3}>
+          <Typography>
+            WorldWide
+          </Typography>
+        </Paper>
+        <Paper className={classes.info} elevation={3}>
+          <Typography className={classes.text}>
+            Cases
+          </Typography>
+          <Typography className={classes.text}>
+          {worldData.cases}
+          </Typography>
+          <Typography className={classes.text}>
+          {worldData.new_cases}
+          </Typography>
+        </Paper>
+        <Paper className={classes.info} elevation={3}>
+          <Typography className={classes.text}>
+            Deaths
+          </Typography>
+          <Typography className={classes.text}>
+            {worldData.deaths}
+          </Typography>
+          <Typography className={classes.text}>
+            {worldData.new_deaths}
+          </Typography>
+        </Paper>
+        <Paper className={classes.info} elevation={3}>
+        <Typography className={classes.text}>
+            Recoveries
+          </Typography>
+          <Typography className={classes.text}>
+            {worldData.recoveries}
+          </Typography>
+          <Typography className={classes.text}>
+            {worldData.new_recoveries}
+          </Typography>
+        </Paper>
       </Paper>
       <CovidMap />
       <CovidTable />

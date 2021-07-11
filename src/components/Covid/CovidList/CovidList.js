@@ -67,7 +67,7 @@ const useStyles = makeStyles({
 })
 
 
-const CovidList = () => {
+const CovidList = ({ handleClick }) => {
   const classes = useStyles();
   const [countryList, setCountryList] = useState([]);
   
@@ -126,23 +126,21 @@ const CovidList = () => {
     <Paper className={classes.root} elevation={5}>
       <CovidListSearch handleChange={handleSearch}/>
       <Paper className={classes.list} elevation={0} variant="outlined">
-        {countryList != [] ? 
+        {
           countryList.map((country, index) => (
             <Paper 
               style={{display: !country.visible && 'none'}} 
               key={index} 
               className={classes.listItem} 
               elevation={3}
+              onClick={() => handleClick(country)}
             >
               <img className={classes.listImage} src={country.country_flag}></img>
               <Typography className={classes.listText} noWrap>
                 {country.country_name}
               </Typography>
             </Paper>
-          )) : 
-          <Typography noWrap>
-            No Match
-          </Typography>}
+          ))}
       </Paper>
     </Paper>
   )
