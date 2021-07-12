@@ -31,6 +31,14 @@ export const getTime = () => {
   }`;
 };
 
+/*  */
+export const numberFormatter = num => {
+  const formatter = new Intl.NumberFormat('en', {
+    notation: 'compact'
+  })
+  return formatter.format(num)
+}
+
 /***----CASE COLORS FOR MAP-----*****/
 const displayTypeData = {
   cases: {
@@ -70,15 +78,20 @@ export const sortData = (data) => {
 export const prettyPrintStat = (stat) =>
   stat ? `${numeral(stat).format("0,0")}` : "0";
 
+/*CHANGE COUNTRY OBJECT FORMAT */
 export const refineCountry = data => {
+  console.log(data)
   return {
     country: data.country,
     continent: data.continent,
     flag: `https://www.countryflags.io/${data.countryInfo.iso2}/shiny/64.png`,
     population: numeral(data.population).format("0,0"),
     cases: numeral(data.cases).format("0,0"),
+    new_cases: numeral(data.todayCases).format("0,0"),
     deaths: numeral(data.deaths).format("0,0"),
+    new_deaths: numeral(data.todayDeaths).format("0,0"),
     recoveries: numeral(data.recovered).format("0,0"),
+    new_recoveries: numeral(data.todayRecovered).format("0,0"),
     tests: numeral(data.tests).format("0,0"),
     position: [data.countryInfo.lat, data.countryInfo.long],
     iso2: data.countryInfo.iso2

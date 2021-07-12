@@ -19,10 +19,30 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: 440,
+    '&::-webkit-scrollbar': {
+      height: '10px'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: 'rgba(0,0,0,0.5)',
+      borderRadius: '5px',
+    },
+    '&::-webkit-scrollbar-track': {
+      width: '5px',
+      background: 'rgba(0,0,0,0.3)',
+    }
   },
   table_header:{
     textTransform: 'uppercase',
     fontWeight: '800'
+  },
+  head_text: {
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+    fontWeight: '500',
+    fontSize: '.8rem'
+  },
+  text: {
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+    fontWeight: '500',
   }
 });
 
@@ -218,6 +238,7 @@ const CovidTable = () => {
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
+                  className={classes.head_text}
                 >
                   {column.label}
                 </TableCell>
@@ -231,7 +252,7 @@ const CovidTable = () => {
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
-                      <TableCell key={column.id} align={column.align}>
+                      <TableCell className={classes.text} key={column.id} align={column.align}>
                         {column.format && typeof value === 'number' ? column.format(value) : value.charAt(5) === ":" ? <img src={value} alt={value}/> : value}
                       </TableCell>
                     );

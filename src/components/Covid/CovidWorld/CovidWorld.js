@@ -49,7 +49,8 @@ const useStyles = makeStyles({
     }
   },
   text: {
-    lineHeight: '-10'
+    lineHeight: '-10',
+    textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
   },
   indicator: {
     width: '30px',
@@ -117,10 +118,10 @@ const CovidWorld = ({ mapCenter }) => {
     <div className={classes.root}>
       <Paper className={classes.world_data} elevation={5}>
         <Paper className={classes.info} elevation={3}>
-          <Typography variant='h6'>
+          <Typography className={classes.text} variant='h6'>
             WorldWide
           </Typography>
-          <Typography variant='subtitle2'>
+          <Typography className={classes.text} variant='subtitle2'>
             {getDate()}
           </Typography>
         </Paper>

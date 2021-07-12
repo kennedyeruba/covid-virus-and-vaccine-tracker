@@ -36,7 +36,7 @@ const usestyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '10px',
+    padding: '20px 10px',
   },
   cases: {
     width: '100%',
@@ -88,6 +88,9 @@ const usestyles = makeStyles({
       width: '100%',
       borderRadius: '10px'
     }
+  },
+  text: {
+    textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
   }
 })
 
@@ -99,10 +102,10 @@ const CovidUser = ({ data }) => {
       <Paper className={classes.country} elevation={5}>
         <Paper className={classes.info} elevation={3}>
           <div className={classes.info_left}>
-            <Typography>
+            <Typography className={classes.text} variant="subtitle1" noWrap>
               {data.country}
             </Typography>
-            <Typography>
+            <Typography className={classes.text} variant="subtitle2">
               {data.continent}
             </Typography>
           </div>
@@ -110,42 +113,45 @@ const CovidUser = ({ data }) => {
         </Paper>
         <Paper className={classes.population} elevation={3}>
           <div>
-            <Typography>Population</Typography>
+            <Typography className={classes.text}  variant="subtitle2">Population</Typography>
           </div>
           <div>
-          <Typography>{data.population}</Typography>
+          <Typography className={classes.text}  variant="subtitle2">{data.population}</Typography>
           </div>
         </Paper>
         <Paper className={classes.cases} elevation={3}>
         <div>
-            <Typography>Cases</Typography>
+            <Typography className={classes.text} variant="subtitle2">Cases</Typography>
           </div>
           <div>
-          <Typography>{data.cases}</Typography>
+            <Typography className={classes.text} variant="subtitle2">{data.cases}</Typography>
+            <Typography className={classes.text} variant="caption" align="right">+{data.new_cases} new</Typography>
           </div>
         </Paper>
         <Paper className={classes.deaths} elevation={3}>
         <div>
-            <Typography>Deaths</Typography>
+            <Typography className={classes.text} variant="subtitle2">Deaths</Typography>
           </div>
           <div>
-          <Typography>{data.deaths}</Typography>
+            <Typography className={classes.text} variant="subtitle2">{data.deaths}</Typography>
+            <Typography className={classes.text} variant="caption">+{data.new_deaths} new</Typography>
           </div>
         </Paper>
         <Paper className={classes.recoveries} elevation={3}>
         <div>
-            <Typography>Recoveries</Typography>
+            <Typography className={classes.text} variant="subtitle2">Recoveries</Typography>
           </div>
           <div>
-          <Typography>{data.recoveries}</Typography>
+            <Typography className={classes.text} variant="subtitle2">{data.recoveries}</Typography>
+            <Typography className={classes.text} variant="caption" align="right">+{data.new_recoveries} new</Typography>
           </div>
         </Paper>
         <Paper className={classes.tests} elevation={3}>
-        <div>
-            <Typography>Tests</Typography>
+          <div>
+            <Typography className={classes.text} variant="subtitle2">Tests</Typography>
           </div>
           <div>
-          <Typography>{data.tests}</Typography>
+            <Typography className={classes.text} variant="subtitle2">{data.tests}</Typography>
           </div>
         </Paper>
       </Paper>

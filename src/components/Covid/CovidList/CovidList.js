@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 import CovidListSearch from '../CovidListSearch/CovidListSearch';
-
+import { Tooltip } from '@material-ui/core';
 import { 
   Paper, 
   Typography, 
@@ -42,6 +41,7 @@ const useStyles = makeStyles({
     width: '100%',
     minHeight: '50px',
     display: 'flex',
+    border: '2px solid transparent',
     alignItems: 'center',
     padding: '10px',
     marginTop: '10px',
@@ -52,6 +52,7 @@ const useStyles = makeStyles({
     },
     '&:hover': {
       cursor: 'pointer',
+      border: '2px solid rgba(0,0,0,0.3)',
     }
   },
   listImage: {
@@ -59,7 +60,7 @@ const useStyles = makeStyles({
   },
   listText: {
     fontWeight: '600',
-    textShadow: '1px 1px 3px rgba(0,0,0,0.3)',
+    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
   },
   
 })
@@ -131,9 +132,11 @@ const CovidList = ({ handleClick }) => {
               onClick={() => handleClick(country)}
             >
               <img className={classes.listImage} src={country.country_flag} alt={country.country_name}></img>
-              <Typography className={classes.listText} noWrap>
-                {country.country_name}
-              </Typography>
+              <Tooltip title={country.country_name} placement="bottom">
+                <Typography className={classes.listText} variant="subtitle2" noWrap>
+                  {country.country_name}
+                </Typography>
+              </Tooltip>
             </Paper>
           ))}
       </Paper>

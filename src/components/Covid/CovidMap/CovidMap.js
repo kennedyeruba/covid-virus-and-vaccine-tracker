@@ -33,8 +33,8 @@ const CovidMap = ({ center, zoom, countries, displayType}) => {
       <Paper className={classes.container} variant='outlined'>
           <MapContainer center={center} zoom={zoom}>
             <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {showDataOnMap(countries, displayType)}
           </MapContainer>

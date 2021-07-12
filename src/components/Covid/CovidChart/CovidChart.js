@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import numeral from "numeral";
 import { Paper } from "@material-ui/core";
+import { numberFormatter } from "../../../misc/utility";
 
 const CovidChart = ({ countryIso }) => {
   const [casesData, setCasesData] = useState({});
   // const [deathsData, setDeathsData] = useState({});
   // const [recoveriesData, setRecoveriesData] = useState({});
+  const [iso, setIso] = useState('');
   const options = {
     legend: {
       display: false,
@@ -44,7 +46,7 @@ const CovidChart = ({ countryIso }) => {
           ticks: {
             // Include a dollar sign in the ticks
             callback: function (value, index, values) {
-              return numeral(value).format("0b");
+              return numberFormatter(value)
             },
           },
         },
@@ -84,7 +86,7 @@ const CovidChart = ({ countryIso }) => {
   useEffect(() => {
     const fetchData = async () => {
       try{
-        if(countryIso){
+        if(countryIso && countryIso != iso){
           const response = await fetch(`https://disease.sh/v3/covid-19/historical/${countryIso}?lastdays=90`)
           const data = await response.json();
 
@@ -95,10 +97,11 @@ const CovidChart = ({ countryIso }) => {
           setCasesData(casesChartData);
           // setDeathsData(deathsChartData);
           // setRecoveriesData(recoveriesChartData);
-          // console.log(data);
+          console.log(casesChartData);
           // console.log('Case Chart: ', casesChartData);
           // console.log('Death Chart: ', deathsChartData);
           // console.log('Recovery Chart: ', recoveriesChartData);
+          setIso(countryIso);
         }
       }catch(err){
         console.log('[Fetching Chart Data Error]: ', err);
