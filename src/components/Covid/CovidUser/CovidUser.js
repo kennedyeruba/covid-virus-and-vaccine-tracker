@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-
+import React from 'react';
 import { makeStyles, Paper, Typography } from '@material-ui/core';
+import CovidChart from '../CovidChart/CovidChart';
 
 const usestyles = makeStyles({
   root: {
@@ -24,7 +23,7 @@ const usestyles = makeStyles({
     padding: '10px',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   info_left: {
     fontSize: '1rem',
@@ -83,15 +82,17 @@ const usestyles = makeStyles({
     height: '28%',
     borderRadius: '10px',
     marginTop: '10px',
+    padding: '10px',
+    '& > .graph': {
+      height: '150px',
+      width: '100%',
+      borderRadius: '10px'
+    }
   }
 })
 
 const CovidUser = ({ data }) => {
   const classes = usestyles();
-
-  useEffect(() => {
-    console.log(data)
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -148,13 +149,11 @@ const CovidUser = ({ data }) => {
           </div>
         </Paper>
       </Paper>
-      <Paper className={classes.chart} elevation={5}></Paper>
+      <Paper className={classes.chart} elevation={5}>
+        <CovidChart countryIso={data.iso2}/>
+      </Paper>
     </div>
   )
 };
-
-CovidUser.propTypes = {};
-
-CovidUser.defaultProps = {};
 
 export default CovidUser;

@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
 import CovidListSearch from '../CovidListSearch/CovidListSearch';
 
 import { 
   Paper, 
-  TextField, 
   Typography, 
   makeStyles 
 } from '@material-ui/core';
@@ -85,15 +83,14 @@ const CovidList = ({ handleClick }) => {
         
         /* Map List before saving */
         refinedData = refinedData.map(country => {
-          return {country_name: country.country, 
+          return {
+            country_name: country.country, 
             country_flag: `https://www.countryflags.io/${country.countryInfo.iso2}/shiny/32.png`, 
             country_iso2: country.countryInfo.iso2,
             country_iso3: country.countryInfo.iso3,
             visible: true
           }
         })
-        localStorage.setItem('country-list', JSON.stringify(refinedData))
-        console.log(refinedData)
         
         setCountryList(refinedData);
       }catch(err){
@@ -106,7 +103,6 @@ const CovidList = ({ handleClick }) => {
 
   /* Handle searching country list */
   const handleSearch = text => {
-    console.log(text)
 
     let newList = [];
     newList = countryList.map(country => {
@@ -118,7 +114,6 @@ const CovidList = ({ handleClick }) => {
       return country;
     });
 
-    console.log(newList)
     setCountryList(newList);
   }
 
@@ -135,7 +130,7 @@ const CovidList = ({ handleClick }) => {
               elevation={3}
               onClick={() => handleClick(country)}
             >
-              <img className={classes.listImage} src={country.country_flag}></img>
+              <img className={classes.listImage} src={country.country_flag} alt={country.country_name}></img>
               <Typography className={classes.listText} noWrap>
                 {country.country_name}
               </Typography>
@@ -144,10 +139,6 @@ const CovidList = ({ handleClick }) => {
       </Paper>
     </Paper>
   )
-};
-
-CovidList.propTypes = {};
-
-CovidList.defaultProps = {};
+}
 
 export default CovidList;

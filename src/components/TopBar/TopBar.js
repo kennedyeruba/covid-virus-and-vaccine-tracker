@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Switch from '@material-ui/core/Switch';
 // import PropTypes from 'prop-types';
 import '../../assets/css/TopBar.css';
-import { makeStyles, useTheme } from '@material-ui/core';
+import { makeStyles} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TopBar = ({themeToggle}) => {
-  const theme = useTheme();
-  const [checked, setChecked] = useState(false);
+  // const theme = useTheme();
+  const [checked, setChecked] = useState(true);
 
   useEffect(() => {
     themeToggle(checked)

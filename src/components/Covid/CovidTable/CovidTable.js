@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -192,8 +191,7 @@ const CovidTable = () => {
         population: item["Population"]
       })
     })
-    setCovidTable(newData)
-    console.log(newData)
+    setCovidTable(newData);
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -234,7 +232,7 @@ const CovidTable = () => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value.charAt(5) === ":" ? <img src={value}/> : value}
+                        {column.format && typeof value === 'number' ? column.format(value) : value.charAt(5) === ":" ? <img src={value} alt={value}/> : value}
                       </TableCell>
                     );
                   })}
@@ -255,10 +253,6 @@ const CovidTable = () => {
       />
     </Paper>
   )
-};
-
-CovidTable.propTypes = {};
-
-CovidTable.defaultProps = {};
+}
 
 export default CovidTable;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Paper, makeStyles } from '@material-ui/core';
 import { DeleteSweep } from '@material-ui/icons';
-import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   root: {
@@ -54,10 +53,6 @@ const CovidListSearch = ({handleChange}) => {
         </Paper>
       </Paper>
   )
-};
-
-CovidListSearch.propTypes = {};
-
-CovidListSearch.defaultProps = {};
+}
 
 export default CovidListSearch;

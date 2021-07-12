@@ -1,10 +1,9 @@
 import React, { useState,useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles, Paper } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
-
+import { makeStyles, Paper, Typography } from '@material-ui/core';
 import CovidMap from '../CovidMap/CovidMap';
 import CovidTable from '../CovidTable/CovidTable';
+import numeral from "numeral";
+import { getDate } from '../../../misc/utility';
 
 const useStyles = makeStyles({
   root: {
@@ -44,152 +43,133 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    '&:hover':{
+      cursor: 'pointer',
+    }
   },
   text: {
     lineHeight: '-10'
+  },
+  indicator: {
+    width: '30px',
+    height: '5px',
+    bordeRadius: '100px',
+    background: '#0078a8',
+    margin: '2px 0',
+    // opacity: '.3',
+    transition: 'all .3s ease',
   }
 })
 
-const CovidWorld = () => {
+const CovidWorld = ({ mapCenter }) => {
   const classes = useStyles();
   const [worldData, setWorldData] = useState({});
   const [countriesData, setCountriesData] = useState([]);
-  const [searchType, setSearchType] = useState('TotalCases');
+  const [displayType, setDisplayType] = useState('cases');
+  const [mapZoom, setMapZoom] = useState(3);
 
+  /* GET COUNTRIES FOR MAP */
   useEffect(() => {
     const fetchAllCountriesData = async () => {
       try{
-        // const response = await fetch("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/countries", {
-        //   "method": "GET",
-        //   "headers": {
-        //     "x-rapidapi-key": "2b77998fcemsh394d28feaaeaeebp1e00b0jsn01de2fd7d8dc",
-        //     "x-rapidapi-host": "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com"
-        //   }
-        // })
-
-        // const data = await response.json();
-        const data = JSON.parse(localStorage.getItem('countries'));
-        const refinedData = [];
-        data.map(item => {
-          refinedData.push({
-            Country: item['Country'], 
-            Population: item['Population'], 
-            [searchType]: item[searchType]})
-        })
-        setCountriesData(refinedData);
-        console.log(refinedData);
+        const response = await fetch('https://disease.sh/v3/covid-19/countries')
+        let data = await response.json();
+        setCountriesData(data);
+        setMapZoom(3)
       }catch(err){
-        console.log(`[GET TABLE ERROR]: ${err}`)
+        console.log(`[GET MAP DATA ERROR]: ${err}`)
       }
     }
-
     fetchAllCountriesData();
-  }, [searchType]);
+  }, []);
 
+  /* GET WORLDWIDE DATA */
   useEffect(() => {
     const fetchWorldData = async () => {
       try{
-      //   const response = await fetch("https://vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com/api/npm-covid-data/world", {
-      //     "method": "GET",
-      //     "headers": {
-      //       "x-rapidapi-key": "2b77998fcemsh394d28feaaeaeebp1e00b0jsn01de2fd7d8dc",
-      //       "x-rapidapi-host": "vaccovid-coronavirus-vaccine-and-treatment-tracker.p.rapidapi.com"
-      //     }
-      //   })
+        const response = await fetch('https://disease.sh/v3/covid-19/all')
+        const data = await response.json();
 
-        // const data = await response.json();
-        const data = JSON.parse(localStorage.getItem('world'));
         const refinedWorldData = {
-          ...data[0],
-          cases: data[0].TotalCases.toLocaleString('en-US'),
-          new_cases: data[0].NewCases.toLocaleString('en-US'),
-          deaths: data[0].TotalDeaths.toLocaleString('en-US'),
-          new_deaths: data[0].NewDeaths.toLocaleString('en-US'),
-          recoveries: Number.parseInt(data[0].TotalRecovered).toLocaleString('en-US'),
-          new_recoveries: data[0].NewRecovered.toLocaleString('en-US')
+          cases: numeral(data.cases).format('0,0'),
+          new_cases: numeral(data.todayCases).format('0,0'),
+          deaths: numeral(data.deaths).format('0,0'),
+          new_deaths: numeral(data.todayDeaths).format('0,0'),
+          recoveries: numeral(data.recovered).format('0,0'),
+          new_recoveries: numeral(data.todayRecovered).format('0,0')
         }
+
         setWorldData(refinedWorldData)
-        console.log(refinedWorldData)
       }catch(err){
-        console.log(`[GET TABLE ERROR]: ${err}`)
+        console.log('[GET WORLD ERROR]: ', err)
       }
     }
 
     fetchWorldData();
   },[]);
 
-  const handleRecoveries = () => setSearchType('TotalRecovered');
-
-  const handleCases = () => setSearchType('TotalCases');
-
-  const handleDeaths = () => setSearchType('TotalDeaths');
+  const handleTypeChange = type => {
+    setDisplayType(type)
+  }
 
   return (
     <div className={classes.root}>
-      {/* <Paper onClick={handleCases} className={classes.paper} elevation={3} >
-        <Typography variant="h6">Total Cases</Typography>
-        <h2>{worldData['TotalCases']}</h2>
-        <h3>+{worldData['NewCases']}</h3>
-      </Paper>
-      <Paper onClick={handleDeaths} className={classes.paper} elevation={3} >
-        <h1>Total Deaths</h1>
-        <h2>{worldData['TotalDeaths']}</h2>
-        <h3>+{worldData['NewDeaths']}</h3>
-      </Paper>
-      <Paper onClick={handleRecoveries} className={classes.paper} elevation={3} >
-        <h1>Total Recovered</h1>
-        <h2>{worldData['TotalRecovered']}</h2>
-        <h3>+{worldData['NewRecovered']}</h3>
-      </Paper> */}
       <Paper className={classes.world_data} elevation={5}>
         <Paper className={classes.info} elevation={3}>
-          <Typography>
+          <Typography variant='h6'>
             WorldWide
           </Typography>
+          <Typography variant='subtitle2'>
+            {getDate()}
+          </Typography>
         </Paper>
-        <Paper className={classes.info} elevation={3}>
-          <Typography className={classes.text}>
+        <Paper onClick={() => handleTypeChange('cases')} className={classes.info} elevation={3}>
+          <Typography className={classes.text} variant='h6'>
             Cases
           </Typography>
-          <Typography className={classes.text}>
-          {worldData.cases}
+          <Typography className={classes.text} variant='subtitle1'>
+            {worldData.cases}
           </Typography>
-          <Typography className={classes.text}>
-          {worldData.new_cases}
+          <Typography className={classes.text} variant='subtitle2'>
+            +{worldData.new_cases}
           </Typography>
+          <Paper style = {{background: '#0078a8'}} className={classes.indicator} elevation={2}></Paper>
         </Paper>
-        <Paper className={classes.info} elevation={3}>
-          <Typography className={classes.text}>
+        <Paper onClick={() => handleTypeChange('deaths')} className={classes.info} elevation={3}>
+          <Typography className={classes.text} variant='h6'>
             Deaths
           </Typography>
-          <Typography className={classes.text}>
+          <Typography className={classes.text} variant='subtitle1'>
             {worldData.deaths}
           </Typography>
-          <Typography className={classes.text}>
-            {worldData.new_deaths}
+          <Typography className={classes.text} variant='subtitle2'>
+            +{worldData.new_deaths}
           </Typography>
+          <Paper style = {{background: '#e6270e'}} className={classes.indicator} elevation={2}></Paper>
         </Paper>
-        <Paper className={classes.info} elevation={3}>
-        <Typography className={classes.text}>
+        <Paper onClick={() => handleTypeChange('recovered')} className={classes.info} elevation={3}>
+          <Typography className={classes.text} variant='h6'>
             Recoveries
           </Typography>
-          <Typography className={classes.text}>
+          <Typography className={classes.text} variant='subtitle1'>
             {worldData.recoveries}
           </Typography>
-          <Typography className={classes.text}>
-            {worldData.new_recoveries}
+          <Typography className={classes.text} variant='subtitle2'>
+            +{worldData.new_recoveries}
           </Typography>
+          <Paper style = {{background: '#249b00'}} className={classes.indicator} elevation={2}></Paper>
         </Paper>
       </Paper>
-      <CovidMap />
+      <CovidMap 
+        center={mapCenter} 
+        zoom={mapZoom}
+        countries={countriesData}
+        displayType={displayType}
+      />
       <CovidTable />
     </div>
   );
 }
-
-CovidWorld.propTypes = {};
-
-CovidWorld.defaultProps = {};
 
 export default CovidWorld;

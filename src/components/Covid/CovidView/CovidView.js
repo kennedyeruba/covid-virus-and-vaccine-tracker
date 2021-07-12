@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-
-import CovidTable from '../CovidTable/CovidTable';
 import CovidWorld from '../CovidWorld/CovidWorld';
 import CovidUser from '../CovidUser/CovidUser';
 import CovidList from '../CovidList/CovidList'
 
 import { makeStyles } from '@material-ui/core';
+import { refineCountry } from '../../../misc/utility';
 
 const useStyle = makeStyles({
   root: {
@@ -22,29 +20,22 @@ const useStyle = makeStyles({
 const CovidView = () => {
   const classes = useStyle();
   const [countryData, setCountryData] = useState({});
+  const [mapCenter, setMapCenter] = useState([8, -2]);
 
   useEffect(() => {
     const fetchUserCountry = async () => {
 
-      // const ipResponse = await fetch("https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572");
-      // const ip_country_data = await ipResponse.json();
-      // const {country_name} = ip_country_data;
-      // console.log(ip_country_data);
+      const ipResponse = await fetch("https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572");
+      const ip_country_data = await ipResponse.json();
+      const {country_name} = ip_country_data;
 
-      // const dataResponse = await fetch(`https://disease.sh/v3/covid-19/countries/${country_name}?strict=true`);
-      // const data = await dataResponse.json();
-      const data = JSON.parse(localStorage.getItem('country-data'));
-      console.log('local: ', data);
-      let refinedCountry = {
-        flag: `https://www.countryflags.io/${data.countryInfo.iso2}/shiny/64.png`,
-        population: data.population.toLocaleString('en-US'),
-        cases: data.cases.toLocaleString('en-US'),
-        deaths: data.deaths.toLocaleString('en-US'),
-        recoveries: data.recovered.toLocaleString('en-US'),
-        tests: data.tests.toLocaleString('en-US'),
-      } 
+      const dataResponse = await fetch(`https://disease.sh/v3/covid-19/countries/${country_name}?strict=true`);
+      const data = await dataResponse.json();
 
-      setCountryData({...data, ...refinedCountry});
+      let refinedCountry = refineCountry(data);
+      
+      setCountryData(refinedCountry);
+      setMapCenter(refinedCountry.position);
     };
 
     fetchUserCountry();
@@ -53,28 +44,22 @@ const CovidView = () => {
   const handleClickEvent = async ({country_name}) => {
     const response = await fetch(`https://disease.sh/v3/covid-19/countries/${country_name}?strict=true`)
     const data = await response.json()
-    let refinedCountry = {
-      flag: `https://www.countryflags.io/${data.countryInfo.iso2}/shiny/64.png`,
-      population: data.population.toLocaleString('en-US'),
-      cases: data.cases.toLocaleString('en-US'),
-      deaths: data.deaths.toLocaleString('en-US'),
-      recoveries: data.recovered.toLocaleString('en-US'),
-      tests: data.tests.toLocaleString('en-US'),
-    }
+
+    let refinedCountry = refineCountry(data);
   
-    setCountryData({...data, ...refinedCountry});
+    setCountryData(refinedCountry);
+    setMapCenter(refinedCountry.position);
   }
+
   return (
     <div className={classes.root}>
       <CovidUser data={countryData}/>
-      <CovidWorld />
+      <CovidWorld 
+        mapCenter={mapCenter}
+      />
       <CovidList handleClick={handleClickEvent}/>
     </div>
   )
-};
-
-CovidView.propTypes = {};
-
-CovidView.defaultProps = {};
+}
 
 export default CovidView;

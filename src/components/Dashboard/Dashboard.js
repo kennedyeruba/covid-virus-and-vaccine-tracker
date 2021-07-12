@@ -1,22 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
 import '../../assets/css/Dashboard.css';
-
-import Navigation from '../Navigation/Navigation';
 import TopBar from '../TopBar/TopBar';
 import CovidView from '../Covid/CovidView/CovidView';
 import VaccineView from '../Vaccine/VaccineView/VaccineView';
 
 const Dashboard = () => {
-  const [themeMode, setThemeMode] = useState(() => "light");
-  //() => value -> Executes only once.
+  const [themeMode, setThemeMode] = useState("light");
 
   const handleThemeToggle = checked => {
     const themeType = checked ? "dark" : "light"
     setThemeMode(themeType)
-    console.log(themeType)
   }
 
   const theme = createMuiTheme({
@@ -24,10 +19,6 @@ const Dashboard = () => {
       type: themeMode
     }
   })
-
-  useEffect(() => {
-    console.log(themeMode)
-  }, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -50,10 +41,6 @@ const Dashboard = () => {
       </div>
     </ThemeProvider>
   )
-};
-
-Dashboard.propTypes = {};
-
-Dashboard.defaultProps = {};
+}
 
 export default Dashboard;
