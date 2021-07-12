@@ -80,7 +80,6 @@ export const prettyPrintStat = (stat) =>
 
 /*CHANGE COUNTRY OBJECT FORMAT */
 export const refineCountry = data => {
-  console.log(data)
   return {
     country: data.country,
     continent: data.continent,

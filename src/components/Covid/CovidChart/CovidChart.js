@@ -97,7 +97,6 @@ const CovidChart = ({ countryIso }) => {
           setCasesData(casesChartData);
           // setDeathsData(deathsChartData);
           // setRecoveriesData(recoveriesChartData);
-          console.log(casesChartData);
           // console.log('Case Chart: ', casesChartData);
           // console.log('Death Chart: ', deathsChartData);
           // console.log('Recovery Chart: ', recoveriesChartData);
