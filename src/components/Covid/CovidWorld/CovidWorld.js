@@ -5,63 +5,82 @@ import CovidTable from '../CovidTable/CovidTable';
 import numeral from "numeral";
 import { getDate } from '../../../misc/utility';
 
-const useStyles = makeStyles({
-  root: {
-    width: '750px',
-    height: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    overflowY: 'auto',
-    position: 'relative',
-    padding: '0 10px 100px',
-    '&::-webkit-scrollbar': {
-      width: '10px'
+const useStyles = makeStyles(theme => (
+  {
+    root: {
+      width: '750px',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      overflowY: 'auto',
+      position: 'relative',
+      padding: '0 10px 100px',
+      '&::-webkit-scrollbar': {
+        width: '10px'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(0,0,0,0.5)',
+        borderRadius: '5px',
+      },
+      '&::-webkit-scrollbar-track': {
+        width: '5px',
+        background: 'rgba(0,0,0,0.3)',
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        height: 'fit-content',
+        marginTop: '20px',
+        padding: '5px',
+      }
     },
-    '&::-webkit-scrollbar-thumb': {
-      background: 'rgba(0,0,0,0.5)',
-      borderRadius: '5px',
+    world_data: {
+      width: '100%',
+      height: 'fit-content',
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '10px',
+      borderRadius: '10px',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        padding: '20px 0',
+      }
     },
-    '&::-webkit-scrollbar-track': {
-      width: '5px',
-      background: 'rgba(0,0,0,0.3)',
+    info: {
+      width: '160px',
+      height: '100px',
+      borderRadius: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      '&:hover':{
+        cursor: 'pointer',
+      },
+      [theme.breakpoints.down('sm')]: {
+        width: '60%',
+        marginBottom: '20px',
+        '&:last-child': {
+          marginBottom: '0',
+        }
+      }
+    },
+    text: {
+      lineHeight: '-10',
+      textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
+    },
+    indicator: {
+      width: '30px',
+      height: '5px',
+      bordeRadius: '100px',
+      background: '#0078a8',
+      margin: '2px 0',
+      // opacity: '.3',
+      transition: 'all .3s ease',
     }
-  },
-  world_data: {
-    width: '100%',
-    height: 'fit-content',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '10px',
-    borderRadius: '10px',
-  },
-  info: {
-    width: '160px',
-    height: '100px',
-    borderRadius: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    '&:hover':{
-      cursor: 'pointer',
-    }
-  },
-  text: {
-    lineHeight: '-10',
-    textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
-  },
-  indicator: {
-    width: '30px',
-    height: '5px',
-    bordeRadius: '100px',
-    background: '#0078a8',
-    margin: '2px 0',
-    // opacity: '.3',
-    transition: 'all .3s ease',
   }
-})
+))
 
 const CovidWorld = ({ mapCenter }) => {
   const classes = useStyles();

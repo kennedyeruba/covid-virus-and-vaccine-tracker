@@ -15,10 +15,10 @@ const useStyles = makeStyles({
   root: {
     width: '100%',
     borderTop: '1px solid rgba(255,255,255,0.01)',
-    borderRadius: '10px'
+    borderRadius: '10px',
   },
   container: {
-    maxHeight: 440,
+    maxHeight: '440px',
     '&::-webkit-scrollbar': {
       height: '10px'
     },

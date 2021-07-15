@@ -13,14 +13,14 @@ const useStyles = makeStyles({
     padding: '10px',
   },
   container: {
-    width: '700px',
+    width: '100%',
     height: '380px',
     borderRadius: '10px',
     '& > .leaflet-container': {
-      width: '700px',
+      width: '100%',
       height: '100%',
       borderRadius: '10px'
-  }
+    }
   },
 })
 
@@ -31,7 +31,7 @@ const CovidMap = ({ center, zoom, countries, displayType}) => {
   return (
     <Paper className={classes.root} elevation={5}>
       <Paper className={classes.container} variant='outlined'>
-          <MapContainer center={center} zoom={zoom}>
+          <MapContainer className={classes.map} center={center} zoom={zoom}>
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

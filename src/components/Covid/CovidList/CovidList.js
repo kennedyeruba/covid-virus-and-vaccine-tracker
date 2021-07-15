@@ -7,63 +7,69 @@ import {
   makeStyles 
 } from '@material-ui/core';
 
-const useStyles = makeStyles({
-  root: {
-    height: '87vh',
-    width: '280px',
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '10px',
-    padding: '10px',
-    overFlowY: 'hidden'
-  },
-  list: {
-    width: '100%',
-    height: '80%',
-    marginTop: '20px',
-    borderRadius: '10px',
-    padding: '10px',
-    overflowY: 'scroll',
-    position: 'relative',
-    '&::-webkit-scrollbar': {
-      width: '10px'
+const useStyles = makeStyles(theme => (
+  {
+    root: {
+      height: '87vh',
+      width: '280px',
+      display: 'flex',
+      flexDirection: 'column',
+      borderRadius: '10px',
+      padding: '10px',
+      overFlowY: 'hidden',
+      [theme.breakpoints.down('md')]: {
+        position: 'absolute',
+        transform: 'translateX(400%)'
+      }
     },
-    '&::-webkit-scrollbar-thumb': {
-      background: 'rgba(0,0,0,0.5)',
-      borderRadius: '5px',
+    list: {
+      width: '100%',
+      height: '80%',
+      marginTop: '20px',
+      borderRadius: '10px',
+      padding: '10px',
+      overflowY: 'scroll',
+      position: 'relative',
+      '&::-webkit-scrollbar': {
+        width: '10px'
+      },
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(0,0,0,0.5)',
+        borderRadius: '5px',
+      },
+      '&::-webkit-scrollbar-track': {
+        width: '5px',
+        background: 'rgba(0,0,0,0.3)',
+      }
     },
-    '&::-webkit-scrollbar-track': {
-      width: '5px',
-      background: 'rgba(0,0,0,0.3)',
-    }
-  },
-  listItem: {
-    width: '100%',
-    minHeight: '50px',
-    display: 'flex',
-    border: '2px solid transparent',
-    alignItems: 'center',
-    padding: '10px',
-    marginTop: '10px',
-    borderRadius: '10px',
-    userSelect: 'none',
-    '&:nth-child(1)': {
-      marginTop: '0',
+    listItem: {
+      width: '100%',
+      minHeight: '50px',
+      display: 'flex',
+      border: '2px solid transparent',
+      alignItems: 'center',
+      padding: '10px',
+      marginTop: '10px',
+      borderRadius: '10px',
+      userSelect: 'none',
+      '&:nth-child(1)': {
+        marginTop: '0',
+      },
+      '&:hover': {
+        cursor: 'pointer',
+        border: '2px solid rgba(0,0,0,0.3)',
+      }
     },
-    '&:hover': {
-      cursor: 'pointer',
-      border: '2px solid rgba(0,0,0,0.3)',
-    }
-  },
-  listImage: {
-    marginRight: '20px',
-  },
-  listText: {
-    fontWeight: '600',
-    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-  },
-  
-})
+    listImage: {
+      marginRight: '20px',
+    },
+    listText: {
+      fontWeight: '600',
+      textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+    },
+    
+  }
+))
 
 
 const CovidList = ({ handleClick }) => {

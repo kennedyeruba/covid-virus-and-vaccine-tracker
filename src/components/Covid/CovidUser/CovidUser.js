@@ -2,97 +2,107 @@ import React from 'react';
 import { makeStyles, Paper, Typography } from '@material-ui/core';
 import CovidChart from '../CovidChart/CovidChart';
 
-const usestyles = makeStyles({
-  root: {
-    height: '90vh',
-    width: '280px',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  country: {
-    height: 'fit-content',
-    width: '100%',
-    borderRadius: '10px',
-    padding: '10px',
-  },
-  info: {
-    width: '100%',
-    height: '70px',
-    borderRadius: '10px',
-    marginBottom: '10px',
-    padding: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  info_left: {
-    fontSize: '1rem',
-  },
-  population: {
-    width: '100%',
-    height: '50px',
-    borderRadius: '10px',
-    marginBottom: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '20px 10px',
-  },
-  cases: {
-    width: '100%',
-    height: '50px',
-    borderRadius: '10px',
-    marginBottom: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '10px',
-  },
-  deaths: {
-    width: '100%',
-    height: '50px',
-    borderRadius: '10px',
-    marginBottom: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '10px',
-  },
-  recoveries: {
-    width: '100%',
-    height: '50px',
-    borderRadius: '10px',
-    marginBottom: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '10px',
-  },
-  tests: {
-    width: '100%',
-    height: '50px',
-    borderRadius: '10px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '10px',
-  },
-  chart: {
-    width: '100%',
-    height: '28%',
-    borderRadius: '10px',
-    marginTop: '10px',
-    padding: '10px',
-    '& > .graph': {
-      height: '150px',
+const usestyles = makeStyles(theme => (
+  {
+    root: {
+      height: '90vh',
+      width: '280px',
+      display: 'flex',
+      flexDirection: 'column',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        height: 'fit-content',
+        marginTop: '20px',
+        padding: '5px',
+      }
+    },
+    country: {
+      height: 'fit-content',
       width: '100%',
-      borderRadius: '10px'
+      borderRadius: '10px',
+      padding: '10px',
+      [theme.breakpoints.down('sm')]: {
+        padding: '10px',
+      }
+    },
+    info: {
+      width: '100%',
+      height: '70px',
+      borderRadius: '10px',
+      marginBottom: '10px',
+      padding: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    info_left: {
+      fontSize: '1rem',
+    },
+    population: {
+      width: '100%',
+      height: '50px',
+      borderRadius: '10px',
+      marginBottom: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '20px 10px',
+    },
+    cases: {
+      width: '100%',
+      height: '50px',
+      borderRadius: '10px',
+      marginBottom: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '10px',
+    },
+    deaths: {
+      width: '100%',
+      height: '50px',
+      borderRadius: '10px',
+      marginBottom: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '10px',
+    },
+    recoveries: {
+      width: '100%',
+      height: '50px',
+      borderRadius: '10px',
+      marginBottom: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '10px',
+    },
+    tests: {
+      width: '100%',
+      height: '50px',
+      borderRadius: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: '10px',
+    },
+    chart: {
+      width: '100%',
+      borderRadius: '10px',
+      marginTop: '10px',
+      padding: '10px',
+      '& > .graph': {
+        height: '150px',
+        width: '100%',
+        borderRadius: '10px'
+      }
+    },
+    text: {
+      textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
     }
-  },
-  text: {
-    textShadow: '1px 1px 3px rgba(0,0,0,0.5)',
   }
-})
+))
 
 const CovidUser = ({ data }) => {
   const classes = usestyles();
@@ -154,9 +164,9 @@ const CovidUser = ({ data }) => {
             <Typography className={classes.text} variant="subtitle2">{data.tests}</Typography>
           </div>
         </Paper>
-      </Paper>
-      <Paper className={classes.chart} elevation={5}>
-        <CovidChart countryIso={data.iso2}/>
+        <Paper className={classes.chart} elevation={5}>
+          <CovidChart countryIso={data.iso2}/>
+        </Paper>
       </Paper>
     </div>
   )
