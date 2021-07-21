@@ -17,9 +17,16 @@ const useStyles = makeStyles(theme => (
       borderRadius: '10px',
       padding: '10px',
       overFlowY: 'hidden',
+      transition: 'all 0.3s ease',
+      zIndex: '3',
       [theme.breakpoints.down('md')]: {
         position: 'absolute',
-        transform: 'translateX(400%)'
+        top: '60px',
+        right: '20px',
+        transform: 'translateX(110%)',
+      },
+      [theme.breakpoints.down('sm')]: {
+        right: '5px',
       }
     },
     list: {
@@ -125,7 +132,7 @@ const CovidList = ({ handleClick }) => {
   }
 
   return (
-    <Paper className={classes.root} elevation={5}>
+    <Paper className={classes.root} id="country-list" elevation={5}>
       <CovidListSearch handleChange={handleSearch}/>
       <Paper className={classes.list} elevation={0} variant="outlined">
         {

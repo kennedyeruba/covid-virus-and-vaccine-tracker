@@ -47,7 +47,7 @@ const TopBar = ({themeToggle}) => {
 
   return (
     <Paper className={classes.root} square={true} elevation={3}>
-      <Typography variant="h5">CVVT</Typography>
+      <Typography variant="h5">CT</Typography>
       <Paper className={classes.theme_switcher} elevation={3}>
         <p style={{filter: checked ? "grayscale(1)" : "grayscale(0)"}}>🌞</p>
         <Switch

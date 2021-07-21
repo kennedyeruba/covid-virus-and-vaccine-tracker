@@ -1,30 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import CovidWorld from '../CovidWorld/CovidWorld';
 import CovidUser from '../CovidUser/CovidUser';
-import CovidList from '../CovidList/CovidList'
+import CovidList from '../CovidList/CovidList';
+import { MenuOpenRounded } from '@material-ui/icons';
 
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Paper } from '@material-ui/core';
 import { refineCountry } from '../../../misc/utility';
 
 const useStyle = makeStyles(theme => (
   {
     root: {
       width: '100%',
-      minHeight: '100vh',
       height: 'fit-content',
       padding: '20px 10px 10px',
       display: 'flex',
       justifyContent: 'space-between',
+      position: 'relative',
       [theme.breakpoints.down('md')]: {
         justifyContent: 'space-around',
-        position: 'relative'
+        paddingTop: '70px',
       },
       [theme.breakpoints.down('sm')]: {
-        padding: '0 10px',
+        padding: '40px 10px 0',
         overflowY: 'scroll',
         display: 'block',
-        height: '175vh'
+        height: '90vh'
       }
+    },
+    listBtn: {
+      position: 'absolute',
+      top: '10px',
+      right: '20px',
+      display: 'none',
+      width: '40px',
+      height: '40px',
+      borderRadius: '10px',
+      '&:hover': {
+        cursor: 'pointer',
+      },
+      [theme.breakpoints.down('md')]: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }
+    },
+    listBtnIcon: {
+      fontSize: '1.5rem',
+      transition: 'all 0.3s ease',
     }
   }
 ))
@@ -61,15 +83,47 @@ const CovidView = () => {
   
     setCountryData(refinedCountry);
     setMapCenter(refinedCountry.position);
+
+    if(window.screen.availWidth < 1280){
+      const list = document.querySelector('#country-list');
+      const listIcon = document.querySelector('#list-btn-icon');
+      list.style.transform = "translateX(110%)";
+      listIcon.style.transform = "rotate(0)";
+      list.classList.remove('out');
+    }
+  }
+
+  const slideList = () => {
+    const list = document.querySelector('#country-list');
+    const listIcon = document.querySelector('#list-btn-icon');
+
+    if(!list.classList.contains('out')){
+      list.classList.add('out');
+      list.style.transform = "translateX(0%)";
+      listIcon.style.transform = "rotate(180deg)";
+    }else{
+      list.style.transform = "translateX(110%)";
+      listIcon.style.transform = "rotate(0)";
+      list.classList.remove('out');
+    }
   }
 
   return (
     <div className={classes.root}>
+      <Paper 
+        className={classes.listBtn} 
+        elevation={3}
+        onClick={slideList}
+      >
+        <MenuOpenRounded id="list-btn-icon" className={classes.listBtnIcon} />
+      </Paper>
       <CovidUser data={countryData}/>
       <CovidWorld 
         mapCenter={mapCenter}
       />
-      <CovidList handleClick={handleClickEvent}/>
+      <CovidList 
+        handleClick={handleClickEvent}
+      />
     </div>
   )
 }

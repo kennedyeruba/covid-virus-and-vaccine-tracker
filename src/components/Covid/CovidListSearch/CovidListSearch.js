@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Paper, makeStyles } from '@material-ui/core';
-import { DeleteSweep } from '@material-ui/icons';
+import { DeleteSweepRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles({
   root: {
@@ -48,8 +48,8 @@ const CovidListSearch = ({handleChange}) => {
           value={searchText}
           onChange={handleTextChange}  
         />
-        <Paper className={classes.clearBtn} onClick={clearField} elevation={2}>
-          <DeleteSweep />
+        <Paper className={classes.clearBtn} onClick={clearField} elevation={3}>
+          <DeleteSweepRounded />
         </Paper>
       </Paper>
   )
