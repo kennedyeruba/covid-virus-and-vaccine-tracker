@@ -3,7 +3,7 @@ import Switch from '@material-ui/core/Switch';
 // import PropTypes from 'prop-types';
 import '../../assets/css/TopBar.css';
 import { makeStyles} from '@material-ui/core';
-import { Typography, Paper } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
