@@ -39,6 +39,20 @@ export const numberFormatter = num => {
   return formatter.format(num)
 }
 
+const getTypeColor = type => {
+  
+  if("deaths"){
+    return "#e6270e";
+  }
+  if("recovered"){
+    return "#249b00";
+  }
+  if("cases"){
+    return "#0078a8";
+  }
+
+}
+
 /***----CASE COLORS FOR MAP-----*****/
 const displayTypeData = {
   cases: {
@@ -103,7 +117,7 @@ export const showDataOnMap = (data, displayType) =>
     <Circle
       key={index}
       center={[country.countryInfo.lat, country.countryInfo.long]}
-      color={displayTypeData[displayType]["hex"]}
+      color={getTypeColor(displayType)}
       fillColor={displayTypeData[displayType]["hex"]}
       fillOpacity={0.4}
       radius={
