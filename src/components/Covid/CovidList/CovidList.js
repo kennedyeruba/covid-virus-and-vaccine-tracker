@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => (
       borderRadius: '10px',
       padding: '10px',
       overFlowY: 'hidden',
-      transition: 'all 0.3s ease',
+      transition: 'transform 0.3s ease',
       zIndex: '3',
       [theme.breakpoints.down('md')]: {
         position: 'absolute',

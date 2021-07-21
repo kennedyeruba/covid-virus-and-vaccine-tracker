@@ -82,55 +82,11 @@ const useStyles = makeStyles(theme => (
   }
 ))
 
-const CovidWorld = ({ mapCenter }) => {
+const CovidWorld = ({ world, center, onTypeChange, displayType, countries, zoom }) => {
   const classes = useStyles();
-  const [worldData, setWorldData] = useState({});
-  const [countriesData, setCountriesData] = useState([]);
-  const [displayType, setDisplayType] = useState('cases');
-  const [mapZoom, setMapZoom] = useState(3);
-
-  /* GET COUNTRIES FOR MAP */
-  useEffect(() => {
-    const fetchAllCountriesData = async () => {
-      try{
-        const response = await fetch('https://disease.sh/v3/covid-19/countries')
-        let data = await response.json();
-        setCountriesData(data);
-        setMapZoom(3)
-      }catch(err){
-        console.log(`[GET MAP DATA ERROR]: ${err}`)
-      }
-    }
-    fetchAllCountriesData();
-  }, []);
-
-  /* GET WORLDWIDE DATA */
-  useEffect(() => {
-    const fetchWorldData = async () => {
-      try{
-        const response = await fetch('https://disease.sh/v3/covid-19/all')
-        const data = await response.json();
-
-        const refinedWorldData = {
-          cases: numeral(data.cases).format('0,0'),
-          new_cases: numeral(data.todayCases).format('0,0'),
-          deaths: numeral(data.deaths).format('0,0'),
-          new_deaths: numeral(data.todayDeaths).format('0,0'),
-          recoveries: numeral(data.recovered).format('0,0'),
-          new_recoveries: numeral(data.todayRecovered).format('0,0')
-        }
-
-        setWorldData(refinedWorldData)
-      }catch(err){
-        console.log('[GET WORLD ERROR]: ', err)
-      }
-    }
-
-    fetchWorldData();
-  },[]);
 
   const handleTypeChange = type => {
-    setDisplayType(type)
+    onTypeChange(type)
   }
 
   return (
@@ -149,10 +105,10 @@ const CovidWorld = ({ mapCenter }) => {
             Cases
           </Typography>
           <Typography className={classes.text} variant='subtitle1'>
-            {worldData.cases}
+            {world.cases}
           </Typography>
           <Typography className={classes.text} variant='subtitle2'>
-            +{worldData.new_cases}
+            +{world.new_cases}
           </Typography>
           <Paper style = {{background: '#0078a8'}} className={classes.indicator} elevation={2}></Paper>
         </Paper>
@@ -161,10 +117,10 @@ const CovidWorld = ({ mapCenter }) => {
             Deaths
           </Typography>
           <Typography className={classes.text} variant='subtitle1'>
-            {worldData.deaths}
+            {world.deaths}
           </Typography>
           <Typography className={classes.text} variant='subtitle2'>
-            +{worldData.new_deaths}
+            +{world.new_deaths}
           </Typography>
           <Paper style = {{background: '#e6270e'}} className={classes.indicator} elevation={2}></Paper>
         </Paper>
@@ -173,18 +129,18 @@ const CovidWorld = ({ mapCenter }) => {
             Recoveries
           </Typography>
           <Typography className={classes.text} variant='subtitle1'>
-            {worldData.recoveries}
+            {world.recoveries}
           </Typography>
           <Typography className={classes.text} variant='subtitle2'>
-            +{worldData.new_recoveries}
+            +{world.new_recoveries}
           </Typography>
           <Paper style = {{background: '#249b00'}} className={classes.indicator} elevation={2}></Paper>
         </Paper>
       </Paper>
       <CovidMap 
-        center={mapCenter} 
-        zoom={mapZoom}
-        countries={countriesData}
+        center={center} 
+        zoom={zoom}
+        countries={countries}
         displayType={displayType}
       />
       <CovidTable />

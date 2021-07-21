@@ -103,8 +103,8 @@ export const showDataOnMap = (data, displayType) =>
     <Circle
       key={index}
       center={[country.countryInfo.lat, country.countryInfo.long]}
-      color={displayTypeData[displayType].hex}
-      fillColor={displayTypeData[displayType].hex}
+      color={displayTypeData[displayType]["hex"]}
+      fillColor={displayTypeData[displayType]["hex"]}
       fillOpacity={0.4}
       radius={
         Math.sqrt(country[displayType]) * displayTypeData[displayType].multiplier

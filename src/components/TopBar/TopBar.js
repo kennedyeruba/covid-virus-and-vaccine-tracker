@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: '600',
     }
   },
+  logo: {
+    width: '7rem',
+    filter: 'sepia(0)'
+  },
   theme_switcher: {
     width: '150px',
     display: 'flex',
@@ -47,7 +51,7 @@ const TopBar = ({themeToggle}) => {
 
   return (
     <Paper className={classes.root} square={true} elevation={3}>
-      <Typography variant="h5">CT</Typography>
+      <img className={classes.logo} src="./logo.png" alt="logo"/>
       <Paper className={classes.theme_switcher} elevation={3}>
         <p style={{filter: checked ? "grayscale(1)" : "grayscale(0)"}}>🌞</p>
         <Switch
